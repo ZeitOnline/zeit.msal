@@ -25,3 +25,8 @@ Usage
         http.headers['Authorization'] = 'Bearer %s' % auth.get_id_token()
         r = http.get('https://example.zeit.de/')
         assert r.status_code == 200
+
+
+Alternatively, retrieve the refresh token after interactive login, and use that in tests::
+
+    auth.login_with_refresh_token('myrefreshtoken')

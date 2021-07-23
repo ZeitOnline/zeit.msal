@@ -3,6 +3,7 @@ from time import time
 from urllib.parse import urlparse, parse_qsl
 import msal
 import wsgiref.simple_server
+import zeit.msal.cache
 
 
 class Authenticator:
@@ -11,6 +12,8 @@ class Authenticator:
     tenant_zeitverlag = 'f6fef55b-9aba-48ae-9c6d-7ee8872bd9ed'
 
     def __init__(self, client_id, client_secret, cache, tenant_id=None):
+        if isinstance(cache, str):
+            cache = zeit.msal.cache.from_url(cache)
         self.cache = cache
         if tenant_id is None:
             tenant_id = self.tenant_zeitverlag
@@ -50,6 +53,13 @@ class Authenticator:
         self.cache.save()
         return result['id_token']
 
+    def login_with_refresh_token(self, token):
+        result = self.app.acquire_token_by_refresh_token(token, self.scopes)
+        if 'error' in result:
+            raise RuntimeError(result['error'])
+        self.cache.save()
+        return result['id_token']
+
     login_result = None
 
     def login_interactively(self):
@@ -60,6 +70,7 @@ class Authenticator:
         if not self.login_result:
             raise RuntimeError('Obtaining token failed')
         self.cache.save()
+        return self.login_result['id_token']
 
     def accept_http_callback(self):
         with wsgiref.simple_server.make_server(
