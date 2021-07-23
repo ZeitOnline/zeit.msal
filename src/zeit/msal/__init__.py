@@ -1,1 +1,1 @@
-# python package
+from .authenticate import Authenticator  # noqa
