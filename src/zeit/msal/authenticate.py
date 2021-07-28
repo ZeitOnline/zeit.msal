@@ -89,7 +89,7 @@ class Authenticator:
 
     def accept_http_callback(self):
         with wsgiref.simple_server.make_server(
-                'localhost', urlparse(self.redirect_url).port,
+                '0.0.0.0', urlparse(self.redirect_url).port,
                 self.http_callback,
                 handler_class=SilentRequestHandler) as server:
             server.handle_request()
