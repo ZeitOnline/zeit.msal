@@ -8,6 +8,7 @@ import zeit.msal.cache
 @click.option('--client-id')
 @click.option('--client-secret')
 @click.option('--cache-url')
+@click.option('--scopes')
 @click.pass_context
 def cli(ctx, **kw):
     pass
@@ -16,8 +17,12 @@ def cli(ctx, **kw):
 @cli.command()
 @click.pass_context
 def get(ctx):
-    auth = create_authenticator(ctx.parent.params)
-    print(auth.get_id_token())
+    opt = ctx.parent.params
+    auth = create_authenticator(opt)
+    if not opt['scopes']:
+        print(auth.get_id_token())
+    else:
+        print(auth.get_access_token())
 
 
 @cli.command()
@@ -28,7 +33,8 @@ def login(ctx):
 
 
 def create_authenticator(opt):
+    scopes = opt['scopes'].split(',') if opt['scopes'] else None
     return Authenticator(
         opt['client_id'], opt['client_secret'],
         zeit.msal.cache.from_url(opt['cache_url']),
-        opt['tenant_id'])
+        opt['tenant_id'], scopes)

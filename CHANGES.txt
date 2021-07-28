@@ -4,7 +4,7 @@ zeit.msal changes
 1.1.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add `get_access_token` method, make scopes configurable
 
 
 1.0.0 (2021-07-23)

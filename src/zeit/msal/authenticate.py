@@ -11,7 +11,8 @@ class Authenticator:
     redirect_url = 'http://localhost:4180/oauth2/callback'
     tenant_zeitverlag = 'f6fef55b-9aba-48ae-9c6d-7ee8872bd9ed'
 
-    def __init__(self, client_id, client_secret, cache, tenant_id=None):
+    def __init__(self, client_id, client_secret, cache, tenant_id=None,
+                 scopes=None):
         if isinstance(cache, str):
             cache = zeit.msal.cache.from_url(cache)
         self.cache = cache
@@ -24,7 +25,10 @@ class Authenticator:
         # allows specifying no other scopes, but implicitly uses openid,profile
         # So I guess we're lucky that we use `upn` and not `mail`, because I
         # don't see a way to add the `email` scope here.
-        self.scopes = [client_id]
+        if scopes is None:
+            self.scopes = [client_id]
+        else:
+            self.scopes = scopes
 
     def get_id_token(self):
         self.cache.load()
@@ -52,6 +56,17 @@ class Authenticator:
             raise RuntimeError('Refreshing token failed')
         self.cache.save()
         return result['id_token']
+
+    def get_access_token(self):
+        self.cache.load()
+        accounts = self.app.get_accounts()
+        if not accounts:
+            raise RuntimeError('No cached token available')
+        result = self.app.acquire_token_silent(self.scopes, accounts[0])
+        if not result:
+            raise RuntimeError('Refreshing token failed')
+        self.cache.save()
+        return result['access_token']
 
     def login_with_refresh_token(self, token):
         result = self.app.acquire_token_by_refresh_token(token, self.scopes)
