@@ -6,6 +6,8 @@ zeit.msal changes
 
 - Add `get_access_token` method, make scopes configurable
 
+- Implement redis cache
+
 
 1.0.0 (2021-07-23)
 ------------------
