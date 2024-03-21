@@ -1,4 +1,4 @@
-from urllib.parse import urlparse, parse_qsl
+from urllib.parse import urlparse, parse_qsl, urlencode
 import json
 import msal
 import os.path
@@ -51,7 +51,9 @@ def from_url(url):
         if not have_redis:
             raise ValueError('Must install `redis` package')
         query = dict(parse_qsl(parts.query))
+        key = query.pop('key')
+        query = '?' + urlencode(query) if query else ''
         return RedisCache(
-            '%s://%s%s' % (parts.scheme, parts.netloc, parts.path),
-            query['key'])
+            '%s://%s%s%s' % (parts.scheme, parts.netloc, parts.path, query),
+            key)
     raise ValueError('Unknown cache type %s')
