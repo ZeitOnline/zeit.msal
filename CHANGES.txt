@@ -1,7 +1,7 @@
 zeit.msal changes
 =================
 
-1.2.0 (unreleased)
+1.2.0 (2024-03-21)
 ------------------
 
 - Preserve query parameters in redis url
