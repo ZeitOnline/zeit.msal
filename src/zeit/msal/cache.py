@@ -20,10 +20,12 @@ class FileCache(msal.TokenCache):
         return os.path.exists(self.filename)
 
     def load(self):
-        self._cache = json.load(open(self.filename))
+        with open(self.filename, 'r') as fd:
+            self._cache = json.load(fd)
 
     def save(self):
-        json.dump(self._cache, open(self.filename, 'w'))
+        with open(self.filename, 'w') as fd:
+            json.dump(self._cache, fd)
 
 
 class RedisCache(msal.TokenCache):
