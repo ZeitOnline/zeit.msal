@@ -1,2 +1,1 @@
-/.tox/
-/src/zeit.msal.egg-info/
+/bin/.pipenv.success
