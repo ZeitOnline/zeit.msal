@@ -1,18 +1,17 @@
-from msal.token_cache import decode_id_token
 from time import time
-from urllib.parse import urlparse, parse_qsl
-import msal
+from urllib.parse import parse_qsl, urlparse
 import wsgiref.simple_server
+
+from msal.token_cache import decode_id_token
+import msal
 import zeit.msal.cache
 
 
 class Authenticator:
-
     redirect_url = 'http://localhost:4180/oauth2/callback'
     tenant_zeitverlag = 'f6fef55b-9aba-48ae-9c6d-7ee8872bd9ed'
 
-    def __init__(self, client_id, client_secret, cache, tenant_id=None,
-                 scopes=None):
+    def __init__(self, client_id, client_secret, cache, tenant_id=None, scopes=None):
         if isinstance(cache, str):
             cache = zeit.msal.cache.from_url(cache)
         self.cache = cache
@@ -29,9 +28,12 @@ class Authenticator:
             self.scopes = scopes
             exclude_scopes = None
         self.app = msal.ConfidentialClientApplication(
-            client_id, client_secret, token_cache=self.cache,
+            client_id,
+            client_secret,
+            token_cache=self.cache,
             authority='https://login.microsoftonline.com/%s' % tenant_id,
-            exclude_scopes=exclude_scopes)
+            exclude_scopes=exclude_scopes,
+        )
 
     def get_id_token(self):
         self.cache.load()
@@ -81,8 +83,7 @@ class Authenticator:
     login_result = None
 
     def login_interactively(self):
-        self.flow = self.app.initiate_auth_code_flow(
-            self.scopes, self.redirect_url)
+        self.flow = self.app.initiate_auth_code_flow(self.scopes, self.redirect_url)
         print('Please visit %s' % self.flow['auth_uri'])
         self.accept_http_callback()
         if not self.login_result:
@@ -92,19 +93,21 @@ class Authenticator:
 
     def accept_http_callback(self):
         with wsgiref.simple_server.make_server(
-                '0.0.0.0', urlparse(self.redirect_url).port,
-                self.http_callback,
-                handler_class=SilentRequestHandler) as server:
+            '0.0.0.0',
+            urlparse(self.redirect_url).port,
+            self.http_callback,
+            handler_class=SilentRequestHandler,
+        ) as server:
             server.handle_request()
 
     def http_callback(self, environ, start_response):
         start_response('200 OK', [('Content-type', 'text/plain')])
         self.login_result = self.app.acquire_token_by_auth_code_flow(
-            self.flow, dict(parse_qsl(environ.get('QUERY_STRING', ''))))
+            self.flow, dict(parse_qsl(environ.get('QUERY_STRING', '')))
+        )
         return [b'Success, this window can now be closed']
 
 
 class SilentRequestHandler(wsgiref.simple_server.WSGIRequestHandler):
-
     def log_request(self, *args, **kw):
         pass

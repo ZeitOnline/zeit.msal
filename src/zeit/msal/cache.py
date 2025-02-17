@@ -1,17 +1,19 @@
-from urllib.parse import urlparse, parse_qsl, urlencode
+from urllib.parse import parse_qsl, urlencode, urlparse
 import json
-import msal
 import os.path
+
+import msal
+
 
 try:
     import redis
+
     have_redis = True
 except ImportError:
     have_redis = False
 
 
 class FileCache(msal.TokenCache):
-
     def __init__(self, filename):
         super().__init__()
         self.filename = filename
@@ -29,7 +31,6 @@ class FileCache(msal.TokenCache):
 
 
 class RedisCache(msal.TokenCache):
-
     def __init__(self, url, key):
         super().__init__()
         self.client = redis.from_url(url)
@@ -55,7 +56,5 @@ def from_url(url):
         query = dict(parse_qsl(parts.query))
         key = query.pop('key')
         query = '?' + urlencode(query) if query else ''
-        return RedisCache(
-            '%s://%s%s%s' % (parts.scheme, parts.netloc, parts.path, query),
-            key)
+        return RedisCache('%s://%s%s%s' % (parts.scheme, parts.netloc, parts.path, query), key)
     raise ValueError('Unknown cache type %s')

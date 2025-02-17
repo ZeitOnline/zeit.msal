@@ -1,5 +1,6 @@
-from zeit.msal.authenticate import Authenticator
 import click
+
+from zeit.msal.authenticate import Authenticator
 import zeit.msal.cache
 
 
@@ -35,6 +36,9 @@ def login(ctx):
 def create_authenticator(opt):
     scopes = opt['scopes'].split(',') if opt['scopes'] else None
     return Authenticator(
-        opt['client_id'], opt['client_secret'],
+        opt['client_id'],
+        opt['client_secret'],
         zeit.msal.cache.from_url(opt['cache_url']),
-        opt['tenant_id'], scopes)
+        opt['tenant_id'],
+        scopes,
+    )

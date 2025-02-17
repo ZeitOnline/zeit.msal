@@ -14,6 +14,7 @@ msal-token = "zeit.msal.cli:cli"
 [project.urls]
 Repository = "https://github.com/ZeitOnline/zeit.msal"
 
+
 [build-system]
 requires = ["hatchling", "hatch-fancy-pypi-readme"]
 build-backend = "hatchling.build"
@@ -38,3 +39,26 @@ underlines = ["-", "+"]
 directory = "change"
 name = "Changes"  # I'd love to omit the category, but that requires copy&paste of the whole template
 showcontent = true
+
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle
+    "F", # Pyflakes
+    # "UP", # pyupgrade
+    # "B", # flake8-bugbear
+    # "SIM", # flake8-simplify
+    "I", # isort
+]
+fixable = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint.isort]
+from-first = true
+lines-after-imports = 2
