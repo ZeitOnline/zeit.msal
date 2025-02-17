@@ -18,17 +18,20 @@ class Authenticator:
         self.cache = cache
         if tenant_id is None:
             tenant_id = self.tenant_zeitverlag
-        self.app = msal.ConfidentialClientApplication(
-            client_id, client_secret, token_cache=self.cache,
-            authority='https://login.microsoftonline.com/%s' % tenant_id)
         # msal requires this to signify that we want an ID token. It then
         # allows specifying no other scopes, but implicitly uses openid,profile
         # So I guess we're lucky that we use `upn` and not `mail`, because I
         # don't see a way to add the `email` scope here.
         if scopes is None:
             self.scopes = [client_id]
+            exclude_scopes = [client_id]
         else:
             self.scopes = scopes
+            exclude_scopes = None
+        self.app = msal.ConfidentialClientApplication(
+            client_id, client_secret, token_cache=self.cache,
+            authority='https://login.microsoftonline.com/%s' % tenant_id,
+            exclude_scopes=exclude_scopes)
 
     def get_id_token(self):
         self.cache.load()
