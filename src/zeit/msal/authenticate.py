@@ -43,7 +43,7 @@ class Authenticator:
 
         # XXX The msal cache currently does not handle id tokens, it always
         # runs refresh even if the cached data is still valid.
-        result = self.cache.find(self.cache.CredentialType.ID_TOKEN)
+        result = list(self.cache.search(self.cache.CredentialType.ID_TOKEN))
         if result:
             token = result[0]['secret']
             try:
