@@ -1,6 +1,6 @@
 [project]
 name = "zeit.msal"
-version = '1.4.0.dev0'
+version = "1.4.0"
 description = "Microsoft Azure AD authentication helper for CLI applications"
 authors = [{ name = "Die ZEIT Online Engineering", email = "zon-backend@zeit.de" }]
 dynamic = ["readme"]
