@@ -2,7 +2,7 @@ from time import time
 from urllib.parse import parse_qsl, urlparse
 import wsgiref.simple_server
 
-from msal.token_cache import decode_id_token
+from msal.token_cache import _decode_id_token_claims
 import msal
 import zeit.msal.cache
 
@@ -47,7 +47,7 @@ class Authenticator:
         if result:
             token = result[0]['secret']
             try:
-                data = decode_id_token(token)
+                data = _decode_id_token_claims(token)
             except Exception:
                 pass
             else:
