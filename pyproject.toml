@@ -1,12 +1,16 @@
 [project]
 name = "zeit.msal"
+version = '1.4.0.dev0'
 description = "Microsoft Azure AD authentication helper for CLI applications"
 authors = [{ name = "Die ZEIT Online Engineering", email = "zon-backend@zeit.de" }]
-dynamic = ["version", "readme"]
+dynamic = ["readme"]
 dependencies = [
     "click",
     "msal",
 ]
+
+[dependency-groups]
+release = ["towncrier"]
 
 [project.scripts]
 msal-token = "zeit.msal.cli:cli"
@@ -14,12 +18,12 @@ msal-token = "zeit.msal.cli:cli"
 [project.urls]
 Repository = "https://github.com/ZeitOnline/zeit.msal"
 
-
 [build-system]
 requires = ["hatchling", "hatch-fancy-pypi-readme"]
 build-backend = "hatchling.build"
-[tool.hatch.version]
-path = "src/zeit/msal/__init__.py"
+
+[tool.hatch.build]
+exclude = ["/bin", "/docs"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/zeit"]
