@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/ZeitOnline/zeit.msal/compare/1.4.1...1.4.2) (2026-10-30)
+
+
+### Maintenance
+
+* **deps:** update pre-commit hook astral-sh/ruff-pre-commit to v0.17.2 ([#11](https://github.com/ZeitOnline/zeit.msal/issues/11)) ([d8b1fb5](https://github.com/ZeitOnline/zeit.msal/commit/d8b1fb51b9b33a3bcabf13ec85ecbd6a96ea2866))
+
 ## [1.4.1](https://github.com/ZeitOnline/zeit.msal/compare/1.4.0...1.4.1) (2026-10-29)
 
 
