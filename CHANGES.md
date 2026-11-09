@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.2](https://github.com/ZeitOnline/zeit.msal/compare/1.4.1...1.4.2) (2026-11-09)
+
+
+### Maintenance
+
+* **deps:** lock file maintenance (uv) ([#15](https://github.com/ZeitOnline/zeit.msal/issues/15)) ([a7086c1](https://github.com/ZeitOnline/zeit.msal/commit/a7086c1c8437d064daad80eab39066a0e7d259f1))
+* **deps:** lock file maintenance (uv) ([#16](https://github.com/ZeitOnline/zeit.msal/issues/16)) ([9a16cf2](https://github.com/ZeitOnline/zeit.msal/commit/9a16cf252a6705d36ede4bdb5e512ac7eb0017ee))
+* **deps:** lock file maintenance (uv) ([#18](https://github.com/ZeitOnline/zeit.msal/issues/18)) ([09d5ed9](https://github.com/ZeitOnline/zeit.msal/commit/09d5ed98eac110ece95a48b9da602f87efc88db1))
+* **deps:** lock file maintenance (uv) ([#19](https://github.com/ZeitOnline/zeit.msal/issues/19)) ([4918562](https://github.com/ZeitOnline/zeit.msal/commit/4918562bd2e4ba1a709b1a6c8cacaa68fc081465))
+* **deps:** update pre-commit hook astral-sh/ruff-pre-commit to v0.17.2 ([#11](https://github.com/ZeitOnline/zeit.msal/issues/11)) ([d8b1fb5](https://github.com/ZeitOnline/zeit.msal/commit/d8b1fb51b9b33a3bcabf13ec85ecbd6a96ea2866))
+* **deps:** update pre-commit hook astral-sh/ruff-pre-commit to v0.17.3 ([#17](https://github.com/ZeitOnline/zeit.msal/issues/17)) ([abcafbe](https://github.com/ZeitOnline/zeit.msal/commit/abcafbe3b3404377837682475db9521af2890138))
+* **deps:** update zeitonline/gh-action-workflows action to 4.9.0 ([#14](https://github.com/ZeitOnline/zeit.msal/issues/14)) ([1d09e01](https://github.com/ZeitOnline/zeit.msal/commit/1d09e017161cc46bca0773ecf800d07bb695b3b5))
+
 ## [1.4.1](https://github.com/ZeitOnline/zeit.msal/compare/1.4.0...1.4.1) (2026-10-29)
 
 
